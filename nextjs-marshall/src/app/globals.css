@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Global stylesheet
+
+  Tailwind's base styles are imported above. The :root values define CSS
+  custom properties that mirror the values declared in tailwind.config.js. These
+  variables make it simpler to reference colours outside of Tailwind classes,
+  for example in inline styles or inside the NextSeo Open Graph data.
+*/
+:root {
+  --color-background: #0B0B0B;
+  --color-foreground: #F5F5F5;
+  --color-primary: #F5B301;
+  --color-border: rgba(255,255,255,0.1);
+  --color-card: rgba(255,255,255,0.05);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-foreground font-body;
+}
