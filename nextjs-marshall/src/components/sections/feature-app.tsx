@@ -1,7 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  type Variants,
+  type Transition,
+} from "framer-motion";
 import Container from "../ui/container";
 import SectionTitle from "../ui/section-title";
 import Button from "../ui/button";
@@ -10,16 +15,21 @@ import { CheckCircle2 } from "lucide-react";
 type Feature = { title: string; description: string };
 
 export default function FeatureApp() {
-  // respeita usuários que preferem menos movimento
   const prefersReduced = useReducedMotion();
 
-  // variants definidos DENTRO do componente (evita erros de referência)
-  const variants = {
+  // cubic-bezier equivalente ao "easeOut"
+  const easeOut: Transition["ease"] = [0.16, 1, 0.3, 1];
+
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: prefersReduced ? 0 : 20 },
-    show: (i = 0) => ({
+    show: (i: number = 0) => ({
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, delay: i * 0.08, ease: "easeOut" },
+      transition: {
+        duration: 0.6,
+        delay: i * 0.08,
+        ease: easeOut,
+      },
     }),
   };
 
@@ -27,7 +37,7 @@ export default function FeatureApp() {
     {
       title: "Interface Intuitiva",
       description:
-        "Organização clara das aulas, tarefas e materiais foque em aprender, não em procurar.",
+        "Organização clara das aulas, tarefas e materiais — foque em aprender, não em procurar.",
     },
     {
       title: "Métricas em Tempo Real",
@@ -41,7 +51,7 @@ export default function FeatureApp() {
     },
   ];
 
-  // scroll suave se o Button for <a href="#...">
+  // scroll suave para anchors (funciona com o Button que renderiza <Link>)
   const goToOffer = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const href = (e.currentTarget.getAttribute("href") || "").trim();
     if (href.startsWith("#")) {
@@ -60,18 +70,18 @@ export default function FeatureApp() {
         >
           <SectionTitle
             title="Tecnologia e Design em Harmonia"
-            subtitle="Experiência fluida, performance alta e visual premium tudo pensado para retenção e conclusão do curso."
+            subtitle="Experiência fluida, performance alta e visual premium — tudo pensado para retenção e conclusão do curso."
           />
 
           <div className="mt-14 grid grid-cols-1 gap-12 md:grid-cols-2 md:items-center">
             {/* Texto/Lista */}
-            <motion.div variants={variants as any} custom={0}>
+            <motion.div variants={itemVariants} custom={0}>
               <ul className="space-y-6">
                 {features.map((f, i) => (
                   <motion.li
                     key={f.title}
                     className="flex items-start gap-3"
-                    variants={variants}
+                    variants={itemVariants}
                     custom={i}
                     initial="hidden"
                     whileInView="show"
@@ -84,7 +94,7 @@ export default function FeatureApp() {
                       />
                     </span>
                     <div>
-                      <h4 className="text-h3 font-heading text-foreground mb-1">
+                      <h4 className="mb-1 text-h3 font-heading text-foreground">
                         {f.title}
                       </h4>
                       <p className="text-body text-muted-foreground">
@@ -96,7 +106,11 @@ export default function FeatureApp() {
               </ul>
 
               <div className="mt-10">
-                <Button href="#oferta" ariaLabel="Ir para a oferta">
+                <Button
+                  href="#oferta"
+                  ariaLabel="Ir para a oferta"
+                  onClick={goToOffer}
+                >
                   Começar agora
                 </Button>
               </div>
@@ -105,7 +119,7 @@ export default function FeatureApp() {
             {/* Mockup */}
             <motion.div
               className="relative mx-auto max-w-md"
-              variants={variants as any}
+              variants={itemVariants}
               custom={1}
             >
               <div className="relative aspect-[9/16] overflow-hidden rounded-3xl border border-white/10 shadow-soft">
@@ -117,7 +131,7 @@ export default function FeatureApp() {
                   loading="lazy"
                   sizes="(max-width: 768px) 90vw, 480px"
                 />
-                <div className="pointer-events-none absolute inset-0 ring-1 ring-white/10 rounded-3xl" />
+                <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-white/10" />
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background/40 to-transparent" />
               </div>
             </motion.div>
