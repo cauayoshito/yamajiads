@@ -65,7 +65,7 @@ export default function LoginPage() {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  defaultValue="demo@malsa.com.br"
+                  defaultValue="yamaji@ads.com.br"
                   className="w-full rounded-xl border border-white/10 bg-background/60 px-4 py-3 text-foreground placeholder:text-foreground/40 outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/20"
                   placeholder="voce@email.com"
                   required
