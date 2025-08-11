@@ -29,7 +29,7 @@ export default function Highlight() {
           </p>
 
           <Button
-            href="https://wa.me/5541999999999"
+            href="https://wa.me/5571992258349"
             variant="primary"
             ariaLabel="Entre em contato"
           >
